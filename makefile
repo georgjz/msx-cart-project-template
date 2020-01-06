@@ -39,6 +39,7 @@ vpath %.s $(dir $(SOURCES))                     # add source directories to vpat
 EXECUTABLE = $(BUILDDIR)/$(BUILDNAME)
 
 $(EXECUTABLE): $(SOBJ)
+	python genmemmap.py
 	$(LD) $(LDFLAGS) $(LINKERSCRIPT) $(BUILDDIR)/$(BUILDNAME)
 
 $(OBJDIR)/%.o: %.s
@@ -48,6 +49,7 @@ $(OBJDIR)/%.o: %.s
 clean:
 	@rm -f $(OBJDIR)/*.*
 	@rm -f $(EXECUTABLE)
+	@rm -f $(LINKERSCRIPT)
 
 dir:
 	@mkdir -p $(OBJDIR)
