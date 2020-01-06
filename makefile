@@ -10,14 +10,11 @@ LINKERSCRIPT = MemoryMap.cfg
 ###### UNLESS YOU KNOW WHAT YOU ARE DOING ######
 ################################################
 
-# determine which version to build
-
 # Assembler and Linker
 AS      = wla-z80
-# ASFLAGS = -spaces -Felf $(INCARGS) # $(BINARGS)
-ASFLAGS = -spaces -Fvobj $(INCARGS) # $(BINARGS)
+# ASFLAGS = 
 LD      = wlalink
-LDFLAGS = -s -b rawbin1 -M -T $(LINKERSCRIPT) -t 
+LDFLAGS = -v
 
 # Directories
 SRCDIR   = src
@@ -42,10 +39,10 @@ vpath %.s $(dir $(SOURCES))                     # add source directories to vpat
 EXECUTABLE = $(BUILDDIR)/$(BUILDNAME)
 
 $(EXECUTABLE): $(SOBJ)
-	$(LD) $(LDFLAGS) -o $@ $^
+	$(LD) $(LDFLAGS) $(LINKERSCRIPT) $(BUILDDIR)/$(BUILDNAME)
 
 $(OBJDIR)/%.o: %.s
-	$(AS) $(ASFLAGS) -L $@Listing.txt -o $@ $< 
+	$(AS) -o $@ $< 
 
 .PHONY: clean
 clean:
