@@ -10,4 +10,5 @@ fh.write("[objects]" + '\n')
 for x in objlist:
     fh.write(x + '\n')
 
+fh.truncate()
 fh.close()
