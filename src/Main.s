@@ -1,4 +1,4 @@
-; Copyright (C) 2019 Georg Ziegler
+; Copyright (C) 2020 Georg Ziegler
 ;
 ; Permission is hereby granted, free of charge, to any person obtaining a copy of
 ; this software and associated documentation files (the "Software"), to deal in
@@ -10,30 +10,15 @@
 ; The above copyright notice and this permission notice shall be included in
 ; all copies or substantial portions of the Software.
 ; -----------------------------------------------------------------------------
-;   File: Neko.s
+;   File: Main.s
 ;   Author(s): Georg Ziegler
-;   Description: This file contains subroutines to control the cat/neko
-;   character that moves around the map
+;   Description: This file contains the entry point of the cartridge program. It
+;   will call the bell BIOS function and nothing more.
 ;
 
-;----- Constants ---------------------------------------------------------------
-;-------------------------------------------------------------------------------
-
-; ;----- Assembler Directives ----------------------------------------------------
-; .MEMORYMAP
-; DEFAULTSLOT 0
-; SLOTSIZE $4000
-; SLOT 0 $4000
-; .ENDME
-
-; .ROMBANKMAP
-; BANKSTOTAL 1 
-; BANKSIZE $4000
-; BANKS 1 
-; .ENDRO
-; ;-------------------------------------------------------------------------------
-
+;--- Includes ------------------------------------------------------------------
 .include "MemoryMap.inc"
+;-------------------------------------------------------------------------------
 
 ;-------------------------------------------------------------------------------
 .bank 0 slot 0
