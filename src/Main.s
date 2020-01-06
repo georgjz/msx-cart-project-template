@@ -17,103 +17,47 @@
 ;
 
 ;----- Constants ---------------------------------------------------------------
-BORDER  =   $d020 
-CHROUT  =   $ffd2 
 ;-------------------------------------------------------------------------------
 
 ;----- Assembler Directives ----------------------------------------------------
-.p02
+.MEMORYMAP
+DEFAULTSLOT 0
+SLOTSIZE $4000
+SLOT 0 $4000
+.ENDME
+
+.ROMBANKMAP
+BANKSTOTAL 1 
+BANKSIZE $4000
+BANKS 1 
+.ENDRO
 ;-------------------------------------------------------------------------------
 
-
-.segment "CODE"
+; .rombanksize $1000
+; .rombanks 4
+   ;section main,code
 ; Simple code that fills the screen with garbage
-ColdStart:
-    lda $4710
-    sta $d020
-    sta $d021
+.bank 0 slot 0
+.org $0200
+; .section "CODE" free
 
-    ldx #$00
-loaddccimage:
-    ; lda $3f40,x
-    lda image,x
-    sta $0400,x
-    lda image+$0100,x
-    sta $0500,x
-    lda image+$0200,x
-    sta $0600,x
-    lda image+$0300,x
-    sta $0700,x
-    ; lda $4328,x
-    lda image+$03e8,x
-    sta $d800,x
-    lda image+$04e8,x
-    sta $d900,x
-    lda image+$05e8,x
-    sta $da00,x
-    lda image+$06e8,x
-    sta $db00,x
-    inx
-    bne loaddccimage
+Start:
+    call    $c0 
+    ret 
+; .ends 
 
-    lda #$3b
-    sta $d011
-    lda #$18
-    sta $d016
-    lda #$18
-    sta $d018
+    ; .org $4000
+    ; section header,code
 
-loop:
-    jmp loop
+.bank 0 slot 0
+.orga $4000
+; .section "HEADER" free
 
-image:
-.incbin "dcc.pal"
+    .byt    "AB"
+    .addr   Start 
+    .addr   $0000
+    .addr   $0000
+    .addr   $0000
+    .addr   $0000, $0000, $0000
 
-WarmStart:
-    lda     #$04
-    sta     BORDER 
-    lda     #147
-    sta     CHROUT 
-    rts 
-
-Loop:
-    jmp     Loop
-
-.segment "HEADER"
-    ; .addr   $8009
-    .addr   ColdStart 
-    ; .addr   $8025 
-    .addr   WarmStart 
-    .byte   $c3, $c2, $cd, $38, $30
-
-
-    ; .BYTE	$09, $80			; Cartridge cold-start vector = $8009
-    ; .BYTE	$25, $80			; Cartridge warm-start vector = $8025
-    ; .BYTE	$C3, $C2, $CD, $38, $30		; CBM8O - Autostart key
-
-
-;	KERNAL RESET ROUTINE
-    ; STX $D016				; Turn on VIC for PAL / NTSC check
-    ; JSR $FDA3				; IOINIT - Init CIA chips
-    ; JSR $FD50				; RANTAM - Clear/test system RAM
-    ; JSR $FD15				; RESTOR - Init KERNAL RAM vectors
-    ; JSR $FF5B				; CINT   - Init VIC and screen editor
-    ; CLI					; Re-enable IRQ interrupts
-
-
-;	BASIC RESET  Routine
-
-    ; JSR $E453				; Init BASIC RAM vectors
-    ; JSR $E3BF				; Main BASIC RAM Init routine
-    ; JSR $E422				; Power-up message / NEW command
-    ; LDX #$FB
-    ; TXS					; Reduce stack pointer for BASIC
-
-    
-;	START YOUR PROGRAM HERE ($8025)
-
-    ; LDA #4		; CHANGE BORDER COLOUR TO 
-    ; STA BORDER		; BLACK
-    ; LDA #147		; PRINT CHR$(147) TO CLEAR
-    ; JSR CHROUT		; SCREEN
-    ; RTS
+; .ends
