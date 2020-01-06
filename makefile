@@ -42,7 +42,7 @@ $(EXECUTABLE): $(SOBJ)
 	$(LD) $(LDFLAGS) $(LINKERSCRIPT) $(BUILDDIR)/$(BUILDNAME)
 
 $(OBJDIR)/%.o: %.s
-	$(AS) -o $@ $< 
+	$(AS) $(INCARGS) -o $@ $< 
 
 .PHONY: clean
 clean:
