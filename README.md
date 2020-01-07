@@ -6,9 +6,9 @@ Find more informations about MSX cartridges on the [MSX Wiki][cartwiki].
 
 Here is the list of tools you need to use this repository:
 
-* make 
-* wla-dx 
-* Python 
+* [make][make]
+* [wla-dx][wladx]
+* [Python][py]
 
 ## Usage
 
@@ -19,11 +19,15 @@ cd msxcart
 make 
 ```
 
-This will create a ROM file called `demo.rom` in the `build/` directory. You can load this ROM into a MSX emulator.
+This will create a ROM file called `demo.rom` in the `build/` directory. You can load this ROM into a MSX emulator. You can change the ROM file name by modifying line 6 of the Makefile.
+
+The resulting ROM file will be a simple 16KB ROM. To change this, modify `src/include/MemoryMap.inc` to fit your needs. 
 
 The Makefile will assemble all source files placed in the `src/` directory. Source files can be placed at arbitrary directory depth in `src/`.
 
 It will also automatically add all files that end with `*.inc` to the assembler's include file list. For example, if you move `src/include/MemoryMap.inc` to `src/others/include/MemoryMap.inc`, it will still work (there is a small issue; see below).
+
+After all source files are assembled by wla-z80, a simple Python script called `genmemmap.py` will generate a linker script `MemoryMap.cfg` for the linker wlalink to use.
 
 ## Example Code
 
@@ -49,3 +53,6 @@ Here's a list of useful links to resources about MSX programming:
 [msxbios]: http://map.grauw.nl/resources/msxbios.php
 [konamiman]: https://github.com/Konamiman
 [msxoverview]: https://github.com/Konamiman/MSX2-Technical-Handbook
+[make]: https://www.gnu.org/software/make/
+[wladx]: http://www.villehelin.com/wla.html
+[py]: https://www.python.org
