@@ -1,3 +1,6 @@
 # Build results
 [Bb]uild/
 [Oo]bj/
+
+# Memory map 
+MemoryMap.cfg

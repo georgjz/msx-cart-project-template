@@ -10,10 +10,9 @@
 ; The above copyright notice and this permission notice shall be included in
 ; all copies or substantial portions of the Software.
 ; -----------------------------------------------------------------------------
-;   File: Main.s
+;   File: Header.s
 ;   Author(s): Georg Ziegler
-;   Description: This file contains the entry point of the cartridge program. It
-;   will call the bell BIOS function and nothing more.
+;   Description: This file contains the cartridge header MSX cartridges need.
 ;
 
 ;--- Includes ------------------------------------------------------------------
@@ -22,23 +21,12 @@
 
 ;-------------------------------------------------------------------------------
 .bank 0 slot 0
-.org $0200
+.org $0000
 ;-------------------------------------------------------------------------------
-
-Start:
-    call    $c0 
-    ret 
-;--- End of Bank 0 Slot 0 ------------------------------------------------------
-
-
-; ;-------------------------------------------------------------------------------
-; .bank 0 slot 0
-; .orga $4000
-; ;-------------------------------------------------------------------------------
-;     .byt    "AB"
-;     .addr   Start 
-;     .addr   $0000
-;     .addr   $0000
-;     .addr   $0000
-;     .addr   $0000, $0000, $0000
-; ;--- End of ROM header ---------------------------------------------------------
+    .byt    "AB"
+    .addr   Start 
+    .addr   $0000
+    .addr   $0000
+    .addr   $0000
+    .addr   $0000, $0000, $0000
+;--- End of ROM header ---------------------------------------------------------
