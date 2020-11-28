@@ -13,7 +13,7 @@
 ;   File: Main.s
 ;   Author(s): Georg Ziegler
 ;   Description: This file contains the entry point of the cartridge program. It
-;   will call the bell BIOS function and nothing more.
+;   will call the bell BIOS function ($00c0) and nothing more.
 ;
 
 ;--- Includes ------------------------------------------------------------------
@@ -26,19 +26,6 @@
 ;-------------------------------------------------------------------------------
 
 Start:
-    call    $c0 
+    call    $c0                 ; BEEP!
     ret 
 ;--- End of Bank 0 Slot 0 ------------------------------------------------------
-
-
-; ;-------------------------------------------------------------------------------
-; .bank 0 slot 0
-; .orga $4000
-; ;-------------------------------------------------------------------------------
-;     .byt    "AB"
-;     .addr   Start 
-;     .addr   $0000
-;     .addr   $0000
-;     .addr   $0000
-;     .addr   $0000, $0000, $0000
-; ;--- End of ROM header ---------------------------------------------------------

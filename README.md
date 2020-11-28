@@ -6,9 +6,10 @@ Find more informations about MSX cartridges on the [MSX Wiki][cartwiki].
 
 Here is the list of tools you need to use this repository:
 
+* [CMake][cmake]
 * [make][make]
 * [wla-dx][wladx]
-* [Python][py]
+* [Glasgow Haskell Compiler][ghc]
 
 ## Usage
 
@@ -17,30 +18,33 @@ Simple use `git` to clone this repository:
 ```Bash
 git clone https://github.com/georgjz/msx-cart-project-template.git msxcart
 cd msxcart
-make
+cmake -S . -Bbuild
+cmake --build build
 ```
 
-This will create a ROM file called `demo.rom` in the `build/` directory. You can load this ROM into a MSX emulator. You can change the ROM file name by modifying line 6 of the Makefile.
+This will create a ROM file called `msx-cartridge-template` in the `build/` directory. You can load this ROM into a MSX emulator. You can change the ROM file name by modifying line 6 of the Makefile.
 
 The resulting ROM file will be a simple 16KB ROM. To change this, modify `src/include/MemoryMap.inc` to fit your needs.
 
-The Makefile will assemble all source files placed in the `src/` directory. Source files can be placed at arbitrary directory depth in `src/`.
+Refer to `CMakeLists.txt` and `src/CMakeLists.txt` to see how to add additional sources and include directories.
 
-It will also automatically add all files that end with `*.inc` to the assembler's include file list. For example, if you move `src/include/MemoryMap.inc` to `src/others/include/MemoryMap.inc`, it will still work (there is a small issue; see below).
-
-After all source files are assembled by wla-z80, a simple Python script called `genmemmap.py` will generate a linker script `MemoryMap.cfg` for the linker wlalink to use.
+After all source files are assembled by wla-z80, a simple Haskell script found in `tools/generatelinkfile.hs` will generate the necessary link file to link the final ROM.
 
 ## Example Code
 
 The example code is very simple at the moment. I plan to add something a bit more complex in the future. The code in `src/Main.s` will simply call the `BEEP` (`$00c0`) function from the [MSX BIOS][msxbios].
 
-## Known Issues
+You can test it with [OpenMSX][openmsx]:
 
-The way the Makefile works, it will only detect changes to source files (ending with `*.s`), but not to include files (ending with `*.inc`).
+```Bash
+openmsx -cart build/msx-cartridge-template
+```
 
-So if you update only include files, you'll need to touch any of the source files (e.g., `touch src/Main.s`), that uses the said include file.
+After the loading screen, you should hear a short beep sound. After that, the machine will continue with it's normal start up routine.
 
-Alternatively, you can simply clean the project and rebuild it completely with `make clean && make`.
+## Contribution
+
+I'm a total newbie when it comes to MSX development, so any kind of feedback, bug reports, pull requests, etc. is highly appreciated and encouraged!
 
 ## Resources and Links
 
@@ -51,9 +55,12 @@ Here's a list of useful links to resources about MSX programming:
 * A complete list of all the [functions in the MSX BIOS][msxbios].
 
 [msxwiki]: https://www.msx.org/wiki/
+[cartwiki]: https://www.msx.org/wiki/Develop_a_program_in_cartridge_ROM
 [msxbios]: http://map.grauw.nl/resources/msxbios.php
 [konamiman]: https://github.com/Konamiman
 [msxoverview]: https://github.com/Konamiman/MSX2-Technical-Handbook
 [make]: https://www.gnu.org/software/make/
+[cmake]: https://cmake.org
 [wladx]: http://www.villehelin.com/wla.html
-[py]: https://www.python.org
+[ghc]: https://www.haskell.org/ghc/
+[openmsx]: http://openmsx.org
