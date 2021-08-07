@@ -1,5 +1,7 @@
 # MSX/MSX2/MSX2+ Project Template for Assembly Programming
 
+**NOTE**: This repository is no longer actively maintained; it is here for people who prefer to work with [wla-dx][wladx]. I have created [a new template](https://github.com/georgjz/msx-cartridge-project-template) that uses [ASxxxx](https://shop-pdp.net/ashtml/asxxxx.php) instead. I think ASxxxx is the superior assembler/linker to wla-dx, so YMMV.
+
 This is a simple project template for creating a program on a [MSX][msxwiki] cartridge.
 
 Find more informations about MSX cartridges on the [MSX Wiki][cartwiki].
